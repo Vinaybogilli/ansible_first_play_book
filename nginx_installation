@@ -1,0 +1,21 @@
+---
+- name: Install and start Nginx
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Nginx (Debian/Ubuntu)
+      apt:
+        name: nginx
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install Nginx (CentOS/RHEL/Amazon Linux)
+      yum:
+        name: nginx
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Start Nginx
+      service:
+        name: nginx
+        state: started
